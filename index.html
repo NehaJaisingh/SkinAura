@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="skinAuraApp">
+<head>
+    <meta charset="UTF-8">
+    <title>SkinAura – Luxury Skincare</title>
+
+    <!-- AngularJS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="style.css">
+
+    <!-- JS -->
+    <script src="app.js"></script>
+    <script src="controller.js"></script>
+</head>
+
+<body ng-controller="SkinAuraController">
+
+    <div class="app-container">
+
+        <!-- Header -->
+        <div class="header">
+            <h1>SkinAura</h1>
+            <p>Luxury Skincare Profile Management</p>
+        </div>
+
+        <!-- Form Card -->
+        <div class="card">
+            <form>
+
+                <label>Customer Name</label>
+                <input type="text" ng-model="customer.name" placeholder="Enter full name" required>
+
+                <label>Email</label>
+                <input type="email" ng-model="customer.email" placeholder="example@email.com" required>
+
+                <label>Skin Type</label>
+                <select ng-model="customer.skinType" required>
+                    <option value="">Choose skin type</option>
+                    <option>Dry</option>
+                    <option>Oily</option>
+                    <option>Combination</option>
+                    <option>Sensitive</option>
+                </select>
+
+                <label>Skin Concern</label>
+                <input type="text" ng-model="customer.concern" placeholder="Acne, pigmentation, dullness" required>
+
+                <button type="button" ng-click="addCustomer()" ng-if="!selectedId">
+                    Save Profile
+                </button>
+
+                <button type="button" ng-click="updateCustomer()" ng-if="selectedId">
+                    Update Profile
+                </button>
+
+            </form>
+        </div>
+
+        <!-- Table Section -->
+        <div class="table-card">
+            <h2>Registered Skin Profiles</h2>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Skin Type</th>
+                        <th>Concern</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr ng-repeat="c in customersList">
+                        <td>{{c.name}}</td>
+                        <td>{{c.email}}</td>
+                        <td>{{c.skinType}}</td>
+                        <td>{{c.concern}}</td>
+                        <td>
+                            <button class="edit" ng-click="editCustomer(c)">Edit</button>
+                            <button class="delete" ng-click="deleteCustomer(c.id)">Delete</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+
+</body>
+</html>
